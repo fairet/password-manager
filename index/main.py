@@ -6,24 +6,26 @@ import json
 import os
 
 class Main():
-    def parse(self):
-        #TODO: Encryption, file_to: str, what_to_parse
-        with open ( 'passwords/usernames.json', 'r' ) as file_with_usernames:
-            usernames_as_data = json.load(file_with_usernames)
+    def parse(self, username: str):
+        #TODO: Encryption, file_to: str, master_key
         
-        return usernames_as_data['usernames']
-    
-    def __init__(self, passwords):
-        self.passwords = passwords
+        try:
+            with open('passwords/usernames.json', 'r') as file_with_usernames:
+                usernames_as_data = json.load(file_with_usernames)
+        
+            return usernames_as_data['usernames'][username]
+        except KeyError:
+            print("[-] Username not found")
+    def __init__(self):
+        pass
 
-    
-
-    def show_options(self):
-        print(self.passwords)
+    def show_options(self, username):
+        return self.parse(self, username)
     
     def initialize(self):
         try:
-            os.makedirs(name="passwords")
+            os.makedirs(name="passwords", exist_ok=True)
+            
         except:
         # TODO: logging
 
@@ -36,17 +38,17 @@ class Main():
                 with open(f'{now}/logging.log', 'w') as file:
                     file.write(f"[{dt.now().strftime('%d/%m/%Y %H:%M:%S')}] File is exists, all is ok")
                     print(f"[INFO] Has been created file {now}/logging.log")
-
-                return None
             
             except:
                 return None
         
-    def main(self):
-        pass
+    def main(self, master, username):
+        master_parsed = "myMaster"
+        if master == master_parsed:
+            print(1555555555)
+            # print(self.show_options(self, username=username))
 
-text = "Passw0rds"
-
-main = Main(text)
-
-main.show_options()
+        else:
+            #print("[-] Your master is wrong")
+        
+            return "[-] Your master is wrong"
